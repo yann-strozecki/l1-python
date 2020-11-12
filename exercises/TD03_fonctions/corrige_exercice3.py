@@ -71,3 +71,8 @@ def sommeTemps(temps1, temps2):
 
 
 afficheTemps(sommeTemps((2, 3, 4, 25), (5, 22, 57, 1)))
+
+def proportionTemps(temps,proportion):
+    pass
+afficheTemps(proportionTemps((2,0,36,0),0.2))
+#appeler la fonction en échangeant l'ordre des arguments
