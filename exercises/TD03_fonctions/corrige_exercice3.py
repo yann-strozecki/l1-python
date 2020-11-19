@@ -1,3 +1,5 @@
+import time
+
 def tempsEnSeconde(temps):
     """ Renvoie la valeur en seconde de temps donné comme jour, heure, minute, seconde."""
     jour, heure, minute, seconde = temps
@@ -72,7 +74,61 @@ def sommeTemps(temps1, temps2):
 
 afficheTemps(sommeTemps((2, 3, 4, 25), (5, 22, 57, 1)))
 
-def proportionTemps(temps,proportion):
-    pass
-afficheTemps(proportionTemps((2,0,36,0),0.2))
+
+def proportionTemps(temps, proportion):
+    return secondeEnTemps(proportion*tempsEnSeconde(temps))
+
+
+afficheTemps(proportionTemps((2, 0, 36, 0), 0.2))
+afficheTemps(proportionTemps(proportion=0.2, temps=(2, 0, 36, 0)))
 #appeler la fonction en échangeant l'ordre des arguments
+
+def tempsEnDate(temps):
+    jour, heure, minute, seconde = temps
+    annee = 1970 + jour // 365
+    jour = jour % 365
+    return (annee, jour, heure, minute, seconde)
+
+
+
+def afficheDate(date = -1):
+    """ Affiche la date passée en argument, la date du jour si date = -1"""
+    annee, jour, heure, minute, seconde = date
+    affiche_pluriel(annee,"année")
+    afficheTemps((jour,heure,minute,seconde))
+    
+temps = secondeEnTemps(1000000000)
+afficheTemps(temps)
+afficheDate(tempsEnDate(temps))
+
+print(time.time())
+print(time.asctime(time.gmtime()))
+afficheDate(tempsEnDate(secondeEnTemps(time.time())))
+
+def estBisextile(annee):
+    return (annee % 4 == 0) and (annee % 100 != 0 or annee % 400 == 0)
+
+def nombreBisextile(jour):
+    annee = 1970
+    nombre_annee_bisextile = 0
+    while jour > 0:
+        if estBisextile(annee):
+            jour -= 366
+            nombre_annee_bisextile += 1
+        else:
+            jour -= 365
+        annee += 1
+    return nombre_annee_bisextile
+
+def tempsEnDateBisextile(temps = -1):
+    if(temps == -1):
+        temps = secondeEnTemps(time.time())
+    jour, heure, minute, seconde = temps
+    jour = jour - nombreBisextile(jour)
+    annee = 1970 + jour // 365
+    jour = jour % 365
+    return (annee, jour, heure, minute, seconde)
+
+
+tempsEnDateBisextile()
+print(time.asctime())
